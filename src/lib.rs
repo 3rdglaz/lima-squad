@@ -27,6 +27,7 @@ where
     stdout: Stdout,
     draw: DrawHandler,
     update: UpdateHandler<UpdateRet>,
+    show_popup: bool,
 }
 
 impl<'a, UpdateRet> Journal<'a, UpdateRet>
@@ -44,6 +45,7 @@ where
             stdout,
             draw,
             update,
+            show_popup: false,
         })
     }
 
@@ -59,6 +61,9 @@ where
             }
         }
     }
+    pub fn toggle_popup(&mut self) {
+        self.show_popup = !self.show_popup;
+    }
 }
 
 impl<'a, UpdateRet> Drop for Journal<'a, UpdateRet>
@@ -70,6 +75,7 @@ where
         let _ = self.stdout.execute(LeaveAlternateScreen);
     }
 }
+
 #[derive(Debug, Default, Setters)]
 pub struct Popup<'a> {
     #[setters(into)]

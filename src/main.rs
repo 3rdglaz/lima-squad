@@ -15,7 +15,7 @@ async fn update(event: Event) -> anyhow::Result<()> {
         if key.kind == event::KeyEventKind::Press {
             match key.code {
                 KeyCode::Char('q') => anyhow::bail!("exited"),
-                // KeyCode::Char('?') => app.show_popup = !app.show_popup,
+                KeyCode::Char('?') => journal.toggle_popup(),
                 _ => {}
             }
         }
@@ -60,6 +60,7 @@ fn ui(frame: &mut Frame<'_, '_>) {
         Paragraph::new("Hello World!").block(Block::default().title("tag").borders(Borders::ALL)),
         layout[4],
     );
+    // if (show_popup) {
     let popup = Popup::default()
         .content("Hello world!")
         .style(Style::new().yellow())
@@ -67,4 +68,5 @@ fn ui(frame: &mut Frame<'_, '_>) {
         .title_style(Style::new().white().bold())
         .border_style(Style::new().red());
     frame.render_widget(popup, popup_area);
+    // }
 }
